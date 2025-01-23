@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DRM Player</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.12.6/shaka-player.compiled.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    video {
+      width: 80%;
+      max-width: 800px;
+      margin: 20px auto;
+      display: block;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>DRM-Enabled Video Player</h1>
+  <video id="video" controls autoplay></video>
+  <div class="error" id="error"></div>
+
+  <script>
+    // Initialize Shaka Player
+    async function initShakaPlayer() {
+      const video = document.getElementById('video');
+      const errorElement = document.getElementById('error');
+
+      // Clear error messages
+      function onError(error) {
+        console.error('Error code', error.code, 'object', error);
+        errorElement.textContent = `Error: ${error.message}`;
+      }
+
+      // Check if the browser supports DRM
+      if (!shaka.Player.isBrowserSupported()) {
+        errorElement.textContent = 'Your browser does not support DRM playback.';
+        return;
+      }
+
+      // Initialize Shaka Player
+      const player = new shaka.Player(video);
+
+      // Listen for errors
+      player.addEventListener('error', (event) => onError(event.detail));
+
+      // Configure DRM license server
+      const manifestUri = 'https://cdn.bitmovin.com/content/assets/art-of-motion_drm/mpds/11331.mpd'; // Replace with your DASH or HLS manifest URL
+      const licenseServerUri = 'https://cwip-shaka-proxy.appspot.com/no_auth'; // Replace with your DRM license server URL
+
+      player.configure({
+        drm: {
+          servers: {
+            'com.widevine.alpha': licenseServerUri, // Widevine DRM
+            'com.microsoft.playready': licenseServerUri, // PlayReady DRM
+          },
+        },
+      });
+
+      try {
+        // Load the manifest
+        await player.load(manifestUri);
+        console.log('The video has been loaded successfully!');
+      } catch (error) {
+        onError(error);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initShakaPlayer();
+    });
+  </script>
+</body>
+</html>
