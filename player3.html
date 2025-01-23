@@ -54,8 +54,8 @@
       player.addEventListener('error', (event) => onError(event.detail));
 
       // Configure DRM license server
-      const manifestUri = 'https://media.axprod.net/TestVectors/v6.1-MultiDRM-MultiKey/Manifest_1080p.mpd'; // Replace with your DASH or HLS manifest URL
-      const licenseServerUri = 'https://drm-widevine-licensing.axtest.net/AcquireLicense'; // Replace with your DRM license server URL
+      const manifestUri = 'https://cdn.bitmovin.com/content/assets/art-of-motion_drm/mpds/11331.mpd'; // Replace with your DASH or HLS manifest URL
+      const licenseServerUri = 'https://cwip-shaka-proxy.appspot.com/no_auth'; // Replace with your DRM license server URL
 
       player.configure({
         drm: {
