@@ -64,6 +64,11 @@
           },
         },
       });
+      player.getNetworkingEngine().registerRequestFilter(function(type, request, context) {
+        if (type == shaka.net.NetworkingEngine.RequestType.LICENSE) {
+          request.allowCrossSiteCredentials = true;
+        }
+      });
      // player.getNetworkingEngine().registerRequestFilter(function(type, request, context) {
         // Only add headers to license requests:
       //  if (type == shaka.net.NetworkingEngine.RequestType.LICENSE) {
