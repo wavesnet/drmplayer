@@ -54,8 +54,8 @@
       player.addEventListener('error', (event) => onError(event.detail));
 
       // Configure DRM license server
-      const manifestUri = 'https://storage.googleapis.com/shaka-demo-assets/sintel-widevine/dash.mpd'; // Replace with your DASH or HLS manifest URL
-      const licenseServerUri = 'https://cwip-shaka-proxy.appspot.com/no_auth'; // Replace with your DRM license server URL
+      const manifestUri = 'https://demo.aplombtv.in/drm/h264.mpd'; // Replace with your DASH or HLS manifest URL
+      const licenseServerUri = 'https://license.uat.widevine.com/cenc/getcontentkey/widevine_test'; // Replace with your DRM license server URL
 
       player.configure({
         drm: {
