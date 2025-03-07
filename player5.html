@@ -64,6 +64,12 @@
           },
         },
       });
+      // Modify the request to add headers
+      player.getNetworkingEngine().registerRequestFilter((type, request) => {
+        if (type === shaka.net.NetworkingEngine.RequestType.LICENSE) {
+          request.headers['X-AxDRM-Message'] = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXJzaW9uIjogMSwKImJlZ2luX2RhdGUiOiAiMjAwMC0wMS0wMVQxMjozMjowMSswMzowMCIsCiJleHBpcmF0aW9uX2RhdGUiOiAiMjAyNS0xMi0zMVQyMzo1OTo0MCswMzowMCIsCiJjb21fa2V5X2lkIjogImE4OThmNTM5LThhZWItNGQ4Ni04MWJkLWIyN2UwMDgyNTdlMCIsCiJtZXNzYWdlIjogewogICJ0eXBlIjogImVudGl0bGVtZW50X21lc3NhZ2UiLAogICJ2ZXJzaW9uIjogMiwKICAibGljZW5zZSI6IHsKICAgICJkdXJhdGlvbiI6IDM2MDAKICB9LAogICJjb250ZW50X2tleXNfc291cmNlIjogewogICAgImlubGluZSI6IFsKICAgICAgewogICAgICAgICJpZCI6ICIxMTExMTExMS0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDAiCiAgICAgIH0KICAgIF0KICB9Cn19.KZcmrPo3RvMT7_AdE4Dtj-YkQ-Wp0D0IdVA5Mnw2I3A';
+        }
+      });
      // player.getNetworkingEngine().registerRequestFilter(function(type, request, context) {
      //   if (type == shaka.net.NetworkingEngine.RequestType.LICENSE) {
       //    request.allowCrossSiteCredentials = true;
